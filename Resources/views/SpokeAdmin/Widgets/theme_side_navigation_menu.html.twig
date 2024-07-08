@@ -1,0 +1,37 @@
+{% set mainSelectedNavigation = mainSelectedNavigation is defined ? mainSelectedNavigation : '' %}
+{% set subMainSelectedNavigation = subMainSelectedNavigation is defined ? subMainSelectedNavigation: '' %}
+
+<ul class="menu vertical" data-accordion-menu>
+    <li>
+        <a href="#">Dashboard</a>
+    </li>
+    <li>
+        <a href="#">Practices</a>
+        <ul class="nested vertical menu is-active">
+            <li>
+                <a href="#">Specializations</a>
+            </li>
+            <li>
+                <a href="#">Treatments</a>
+            </li>
+        </ul>
+    </li>
+    <li class="is-active">
+        <a href="#">Packages</a>
+    </li>
+    <li>
+        <a href="#">Facilities</a>
+    </li>
+    <li>
+        <a href="#">Doctors</a>
+    </li>
+    <li>
+        <a href="#">Companies</a>
+    </li>
+    <li>
+        <a href="#">Content</a>
+    </li>
+    <li>
+        <a href="#">Users</a>
+    </li>
+</ul>

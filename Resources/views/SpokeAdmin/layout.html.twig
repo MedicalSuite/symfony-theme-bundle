@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block page_metas %}{% endblock %}
+    <title>{% block title %}Spoke Admin Portal {{ pageTitle is defined ? '|' ~ pageTitle : '' }}{% endblock %}</title>
+
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+    {% block stylesheets %}
+        {# Don't use assetic for now we're getting all styles from the designer's app.css which has already been processed via SASS #}
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}"/>
+    {% endblock %}
+</head>
+
+<body>
+    <div class="expanded row medium-collapse">
+    {% if app.user %}
+        <div class="medium-2 columns">
+            <div class="site-nav">
+                <header>
+                    <a href="#" class="logo text-center">
+                        <img src="{{ asset('img/logo.png') }}" title="Spoke">
+                    </a>
+                </header>
+
+                {% block side_navigation_menu %}
+                    {{ render_theme_widget('theme_side_navigation_menu')| raw }}
+                {% endblock %}
+            </div>
+        </div>
+
+        <div class="medium-10 columns">
+            <div class="content">
+                <div class="top-bar">
+                    <div class="top-bar-left">
+                        <!-- <ul class="menu">
+                              <li><input type="search" placeholder="Search"></li>
+                              <li><button type="button" class="button">Search</button></li>
+                        </ul> -->
+                    </div>
+                    <div class="top-bar-right">
+                        {{ render_theme_widget('theme_user_menu')| raw }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="medium-10 columns">
+
+                {% embed get_theme_widget('pageContentWrapper') %}
+                    {% block page_content_title %}
+                        {{ page_content_title | default('') }}
+                    {% endblock %}
+
+                    {% block page_content_breadcrumbs_wrapper %}
+                        {% if page_content_breadcrumbs is defined %}
+                            <div class="page-lead">
+                                <nav aria-label="You are here:" role="navigation">
+                                    {% block page_content_breadcrumbs %}
+                                        {{ page_content_breadcrumbs | default('') }}
+                                    {% endblock %}
+                                </nav>
+                            </div>
+                        {% endif %}
+                    {% endblock %}
+
+                    {% block page_content_section %}
+                        {{ page_content_section | default('') }}
+                    {% endblock %}
+                {% endembed %}
+            </div>
+        </div>
+        {% else %}
+            {% block content %}{% endblock %}
+        {% endif %}
+    </div>
+
+    {% block javascripts %}
+        {% javascripts
+        '@SymfonyThemeBundle/Resources/public/SpokeAdmin/js/jquery.js'
+        '@SymfonyThemeBundle/Resources/public/SpokeAdmin/js/what-input.js'
+        '@SymfonyThemeBundle/Resources/public/SpokeAdmin/js/foundation.js'
+        '@SymfonyThemeBundle/Resources/public/SpokeAdmin/js/foundation.toggler.js'
+        '@SymfonyThemeBundle/Resources/public/SpokeAdmin/js/foundation.util.motion.js'
+        '@SymfonyThemeBundle/Resources/public/SpokeAdmin/js/foundation.util.triggers.js'
+        '@SymfonyThemeBundle/Resources/public/SpokeAdmin/js/app.js'
+        '../app/Resources/public/admin/js/migration.js'
+        output='compiled/theme.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+
+        <script type="text/javascript">
+            $(function () {
+                var timer;
+
+                $(window).resize(function() {
+                    clearTimeout(timer);
+                    timer = setTimeout(function() {
+                        $('.site-nav').css("height", $(window).height());
+                    }, 40);
+                }).resize();
+            });
+
+            $(".list-item-name a").click(function () {
+                $(".list-item-name a i").hasClass("fa-caret-down").removeClass("fa-caret-down").addClass("fa-caret-up");
+                $(".list-item-name a i").hasClass("fa-caret-up").removeClass("fa-caret-up").addClass("fa-caret-down");
+            });
+
+        </script>
+    {% endblock %}
+
+</body>
+</html>

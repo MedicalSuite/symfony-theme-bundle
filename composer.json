@@ -1,0 +1,10 @@
+{
+  "name": "acgvelarde/symfony-theme-bundle",
+  "require": {
+    "php": ">=5.3.2"
+  },
+  "autoload": {
+    "psr-0": { "Velarde\\SymfonyThemeBundle\\": "" }
+  },
+  "target-dir": "Velarde/SymfonyThemeBundle"
+}

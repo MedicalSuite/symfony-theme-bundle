@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    {% block page_metas %}{% endblock %}
+    <title>{% block title %}{% endblock %}</title>
+    {% stylesheets
+        '@SymfonyThemeBundle/Resources/public/FlexiAdmin/css/plugins/bootstrap/css/bootstrap.min.css'
+        '@SymfonyThemeBundle/Resources/public/FlexiAdmin/icons/font-awesome/css/font-awesome.min.css'
+        '@SymfonyThemeBundle/Resources/public/FlexiAdmin/css/plugins/ladda/ladda-themeless.min.css'
+        '@SymfonyThemeBundle/Resources/public/FlexiAdmin/css/plugins/bootstrap-select/bootstrap-select.min.css'
+        '@SymfonyThemeBundle/Resources/public/FlexiAdmin/css/style.css'
+        '@SymfonyThemeBundle/Resources/public/FlexiAdmin/css/plugins.css'
+        filter='cssrewrite' output='compiled/theme.css' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+
+
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+</head>
+<body class="">
+
+    {% if app.user %}
+        <div id="wrapper">
+
+        <!-- begin TOP NAVIGATION -->
+        <nav class="navbar-top" role="navigation">
+
+            <!-- begin BRAND HEADING -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle pull-right" data-toggle="collapse" data-target=".sidebar-collapse">
+                    <i class="fa fa-bars"></i> Menu
+                </button>
+                <div class="navbar-brand">
+                    {% block top_navigation_brand %}{{ app_name }}{% endblock %}
+                </div>
+            </div>
+            <!-- end BRAND HEADING -->
+
+            <div class="nav-top">
+
+                <!-- begin LEFT SIDE WIDGETS -->
+                <ul class="nav navbar-left">
+                    <li class="tooltip-sidebar-toggle">
+                        <a href="#" id="sidebar-toggle" data-toggle="tooltip" data-placement="right" title="Sidebar Toggle">
+                            <i class="fa fa-bars"></i>
+                        </a>
+                    </li>
+                    <!-- You may add more widgets here using <li> -->
+                </ul>
+                <!-- end LEFT SIDE WIDGETS -->
+
+                <!-- begin MESSAGES/ALERTS/TASKS/USER ACTIONS DROPDOWNS -->
+                <ul class="nav navbar-right">
+                    {{ render_theme_widget('theme_user_menu')| raw }}
+                </ul>
+                <!-- /.nav -->
+                <!-- end MESSAGES/ALERTS/TASKS/USER ACTIONS DROPDOWNS -->
+
+            </div><!-- /.nav-top -->
+        </nav>
+        <!-- /.navbar-top -->
+        <!-- end TOP NAVIGATION -->
+
+
+        {# side navigation #}
+        <nav class="navbar-side" role="navigation">
+            <div class="navbar-collapse sidebar-collapse collapse">
+                <ul id="side" class="nav navbar-nav side-nav">
+                    {% block side_navigation_menu %}
+                        {{ render_theme_widget('theme_side_navigation_menu')| raw }}
+                    {% endblock %}
+                </ul>
+            </div>
+        </nav>
+
+
+        {% block page_content %}{% endblock %}
+
+
+
+    </div>
+    {% else %}
+        {% block content %}{% endblock %}
+    {% endif %}
+
+    {% stylesheets
+        '@SymfonyThemeBundle/Resources/public/FlexiAdmin/js/jquery.min.js'
+        '@SymfonyThemeBundle/Resources/public/FlexiAdmin/js/plugins/slimscroll/jquery.slimscroll.min.js'
+        '@SymfonyThemeBundle/Resources/public/FlexiAdmin/js/plugins/bootstrap/bootstrap.min.js'
+        '@SymfonyThemeBundle/Resources/public/FlexiAdmin/js/plugins/popupoverlay/jquery.popupoverlay.js'
+        '@SymfonyThemeBundle/Resources/public/FlexiAdmin/js/plugins/popupoverlay/defaults.js'
+        '@SymfonyThemeBundle/Resources/public/FlexiAdmin/js/flex.js'
+        '@SymfonyThemeBundle/Resources/public/FlexiAdmin/js/plugins/bootstrap-select/bootstrap-select.min.js'
+        output='compiled/theme.js' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endstylesheets %}
+
+</body>
+</html>

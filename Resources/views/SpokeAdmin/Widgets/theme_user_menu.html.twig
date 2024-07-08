@@ -1,0 +1,21 @@
+<!-- begin USER ACTIONS DROPDOWN -->
+<ul class="dropdown menu" data-dropdown-menu>
+    <li>
+        <a href="#"><i class="fa fa-bell-o fa-lg" aria-describedby="notifCount"></i><span class="alert badge" id="notifCount">6</span></a>
+    </li>
+    <li>
+        <a href="#">{{ app.user.username }}</a>
+        <ul class="menu vertical">
+            <li><a href="#">One</a></li>
+            <li><a href="#">Two</a></li>
+            <li><a href="#">Three</a></li>
+            <li>
+                <a class="logout_open" href="{{ path('fos_user_security_logout') }}">
+                    <i class="fa fa-sign-out"></i> Logout
+                </a>
+            </li>
+        </ul>
+    </li>
+</ul>
+<!-- /.dropdown -->
+<!-- end USER ACTIONS DROPDOWN -->

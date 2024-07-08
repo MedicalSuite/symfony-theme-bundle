@@ -1,0 +1,22 @@
+<div class="portlet portlet-default">
+    {% set with_portlet_heading = with_portlet_heading is defined ? with_portlet_heading : true %}
+    
+    {% if with_portlet_heading %}
+    <div class="portlet-heading">
+        <div class="portlet-title">
+            <h4>
+                {% block portlet_title %}{% endblock %}
+            </h4>
+        </div>
+        <div class="portlet-widgets">
+            {% block portlet_widgets %}
+            {% endblock %}
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    {% endif %}
+    <div class="portlet-body">
+        {% block portlet_body %}{% endblock %}
+    </div>
+    <!-- /.portlet-body -->
+</div>

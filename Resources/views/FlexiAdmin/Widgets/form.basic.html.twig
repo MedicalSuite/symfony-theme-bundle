@@ -1,0 +1,125 @@
+{% use "form_div_layout.html.twig" %}
+
+{% block choice_widget_expanded -%}
+    {% for child in form %}
+        <div class="radio">
+            <label>
+                {{- form_widget(child) -}}
+                {{ child.vars.label }}
+            </label>
+        </div>
+    {% endfor %}
+{%- endblock choice_widget_expanded %}
+
+
+
+{% block form_errors %}
+{% spaceless %}
+    {% if form.parent is empty %}
+        {# --- main form errors #}
+        {% if errors|length > 0 %}
+            <div class="alert alert-danger">
+            {% for error in errors %}
+                {{ error.message }}<br>
+            {% endfor %}
+            </div>
+        
+        {% endif %}
+    {% else %}
+        {% if errors|length > 0 %}
+            {% for error in errors %}
+                <span class="help-block">{{ error.message }}</span>
+            {% endfor %}
+        
+        {% endif %}
+    {% endif %}
+{% endspaceless %}
+{% endblock form_errors %}
+
+{% block form_label %}
+{% spaceless %}
+    {% if label is not sameas(false) %}
+        {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' control-label')|trim}) %}
+        {% if not compound %}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+        {% endif %}
+        {% if required %}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+        {% endif %}
+        {% if label is empty %}
+            {% set label = name|humanize %}
+        {% endif %}
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}</label>
+    {% endif %}
+{% endspaceless %}
+{% endblock form_label %}
+
+{#---- customization for form_row ----#}
+{% block form_row %}
+    {% spaceless %}
+    {% set _hasErrors = form.vars.errors| length > 0 %}
+    <div class="form-group {{ _hasErrors ? 'has-error' : '' }}">
+        {{ form_label(form) }}
+        {% set _widgetClass = attr.class is defined ? 'form-control '~attr.class : 'form-control'%}
+        {{ form_widget(form, {attr: {class:_widgetClass}}) }}
+        {% if help is defined %}
+            <p class="help-block">{{ help |raw}}</p>
+        {% endif %}
+        
+        {{ form_errors(form)}}
+    </div>
+    {% endspaceless %}
+{% endblock form_row %}
+
+{#---- custom widget ----#}
+{% block datepicker_widget %}
+    {% set type="text" %}
+    {% spaceless %}
+    <div id="{{ form.vars.id ~ 'datepicker_container' }}" class="input-group">
+        {% set type = type|default('text') %}
+        {% if attr['data-format'] is not defined %}
+            {% set attr = attr | merge({'data-format': "YYYY-MM-DD"} )%}
+        {% endif %}
+        {{ block('form_widget_simple') }}
+        <span class="input-group-addon">
+            <span data-icon-element="" class="fa fa-calendar"></span>
+        </span>
+    </div>
+    
+    {% endspaceless %}
+{% endblock %}
+
+
+{#---- custom widget ----#}
+{% block timepicker_widget %}
+    {% set type="text" %}
+    {% spaceless %}
+    <div id="{{ form.vars.id ~ 'timepicker_container' }}" class="input-group col-sm-6">
+        {% set type = type|default('text') %}
+        {% if attr['data-format'] is not defined %}
+            {% set attr = attr | merge({'data-format': "HH:mm"} )%}
+        {% endif %}
+        {{ block('form_widget_simple') }}
+        <span class="input-group-addon">
+            <span data-icon-element="" class="fa fa-clock-o"></span>
+        </span>
+    </div>
+    
+    {% endspaceless %}
+{% endblock %}
+
+{% block money_widget %}
+{% spaceless %}
+    <div class="input-group">
+        {% if attr.class is defined %}
+            {% set _class = attr.class~' money-widget'%}
+        {% else %}
+            {% set _class = 'money-widget'%}
+        {% endif %}
+        {% set attr = attr | merge({class: _class})%}
+        <span class="input-group-addon">{{ money_pattern|replace({ ' {{ widget }}':  ''})}}</span>
+        {{ block('form_widget_simple') | raw}}
+    </div>
+    
+{% endspaceless %}
+{% endblock money_widget %}
