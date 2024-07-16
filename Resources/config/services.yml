@@ -3,8 +3,8 @@ services:
     class: Velarde\SymfonyThemeBundle\Twig\SymfonyThemeTwigExtension
     calls:
       - [setEngine, ['@twig']]
-      - [setBaseLayout, [%symfony_theme.base_layout%]]
-      - [setWidgetDirectory, [%symfony_theme.widget_directory%]]
+      - [setBaseLayout, ["%symfony_theme.base_layout%"]]
+      - [setWidgetDirectory, ["%symfony_theme.widget_directory%"]]
     public: false
     tags:
       - { name: twig.extension }

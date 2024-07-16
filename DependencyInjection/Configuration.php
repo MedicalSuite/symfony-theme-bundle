@@ -8,8 +8,8 @@ class Configuration implements  ConfigurationInterface
 {
     public function getConfigTreeBuilder()
     {
-        $tree = new TreeBuilder();
-        $root = $tree->root('velarde_symfony_theme');
+        $tree = new TreeBuilder('velarde_symfony_theme');
+        $root = $tree->getRootNode();
 
         $root->children()
             ->scalarNode('base_layout')

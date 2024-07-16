@@ -1,5 +1,5 @@
 {
-  "name": "acgvelarde/symfony-theme-bundle",
+  "name": "msi/symfony-theme-bundle",
   "require": {
     "php": ">=5.3.2"
   },
