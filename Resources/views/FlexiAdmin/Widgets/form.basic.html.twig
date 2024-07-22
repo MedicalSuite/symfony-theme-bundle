@@ -14,7 +14,7 @@
 
 
 {% block form_errors %}
-{% spaceless %}
+{% apply spaceless %}
     {% if form.parent is empty %}
         {# --- main form errors #}
         {% if errors|length > 0 %}
@@ -23,21 +23,21 @@
                 {{ error.message }}<br>
             {% endfor %}
             </div>
-        
+
         {% endif %}
     {% else %}
         {% if errors|length > 0 %}
             {% for error in errors %}
                 <span class="help-block">{{ error.message }}</span>
             {% endfor %}
-        
+
         {% endif %}
     {% endif %}
-{% endspaceless %}
+{% endapply %}
 {% endblock form_errors %}
 
 {% block form_label %}
-{% spaceless %}
+{% apply spaceless %}
     {% if label is not sameas(false) %}
         {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' control-label')|trim}) %}
         {% if not compound %}
@@ -51,12 +51,12 @@
         {% endif %}
         <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}</label>
     {% endif %}
-{% endspaceless %}
+{% endapply %}
 {% endblock form_label %}
 
 {#---- customization for form_row ----#}
 {% block form_row %}
-    {% spaceless %}
+    {% apply spaceless %}
     {% set _hasErrors = form.vars.errors| length > 0 %}
     <div class="form-group {{ _hasErrors ? 'has-error' : '' }}">
         {{ form_label(form) }}
@@ -65,16 +65,16 @@
         {% if help is defined %}
             <p class="help-block">{{ help |raw}}</p>
         {% endif %}
-        
+
         {{ form_errors(form)}}
     </div>
-    {% endspaceless %}
+    {% endapply %}
 {% endblock form_row %}
 
 {#---- custom widget ----#}
 {% block datepicker_widget %}
     {% set type="text" %}
-    {% spaceless %}
+    {% apply spaceless %}
     <div id="{{ form.vars.id ~ 'datepicker_container' }}" class="input-group">
         {% set type = type|default('text') %}
         {% if attr['data-format'] is not defined %}
@@ -85,15 +85,15 @@
             <span data-icon-element="" class="fa fa-calendar"></span>
         </span>
     </div>
-    
-    {% endspaceless %}
+
+    {% endapply %}
 {% endblock %}
 
 
 {#---- custom widget ----#}
 {% block timepicker_widget %}
     {% set type="text" %}
-    {% spaceless %}
+    {% apply spaceless %}
     <div id="{{ form.vars.id ~ 'timepicker_container' }}" class="input-group col-sm-6">
         {% set type = type|default('text') %}
         {% if attr['data-format'] is not defined %}
@@ -104,12 +104,12 @@
             <span data-icon-element="" class="fa fa-clock-o"></span>
         </span>
     </div>
-    
-    {% endspaceless %}
+
+    {% endapply %}
 {% endblock %}
 
 {% block money_widget %}
-{% spaceless %}
+{% apply spaceless %}
     <div class="input-group">
         {% if attr.class is defined %}
             {% set _class = attr.class~' money-widget'%}
@@ -120,6 +120,6 @@
         <span class="input-group-addon">{{ money_pattern|replace({ ' {{ widget }}':  ''})}}</span>
         {{ block('form_widget_simple') | raw}}
     </div>
-    
-{% endspaceless %}
+
+{% endapply %}
 {% endblock money_widget %}
