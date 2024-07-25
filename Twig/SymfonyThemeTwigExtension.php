@@ -2,16 +2,19 @@
 
 namespace Velarde\SymfonyThemeBundle\Twig;
 
-use Symfony\Bundle\TwigBundle\TwigEngine;
+use Twig\Environment;
+use Twig\TwigFunction;
+use Twig\Extension\AbstractExtension;
+use Twig\Error\LoaderError;
 
-class SymfonyThemeTwigExtension extends \Twig_Extension
+class SymfonyThemeTwigExtension extends AbstractExtension
 {
     private $baseLayout;
 
     private $widgetDirectory;
 
     /**
-     * @var \Twig_Environment
+     * @var Environment
      */
     private $templatingEngine;
 
@@ -25,7 +28,7 @@ class SymfonyThemeTwigExtension extends \Twig_Extension
         $this->widgetDirectory = $v;
     }
 
-    public function setEngine(\Twig_Environment $v)
+    public function setEngine(Environment $v)
     {
         $this->templatingEngine = $v;
     }
@@ -40,9 +43,9 @@ class SymfonyThemeTwigExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('get_theme_layout', array($this, 'getThemeLayout')),
-            new \Twig_SimpleFunction('get_theme_widget', array($this, 'getThemeWidget')),
-            new \Twig_SimpleFunction('render_theme_widget', array($this, 'renderWidget')),
+            new TwigFunction('get_theme_layout', array($this, 'getThemeLayout')),
+            new TwigFunction('get_theme_widget', array($this, 'getThemeWidget')),
+            new TwigFunction('render_theme_widget', array($this, 'renderWidget')),
         );
     }
 
@@ -67,7 +70,7 @@ class SymfonyThemeTwigExtension extends \Twig_Extension
         try{
             return $this->templatingEngine->render($widget);
         }
-        catch (\Twig_Error_Loader $e){
+        catch (LoaderError $e){
             return $this->templatingEngine->render($this->getThemeWidget($widgetName));
         }
     }
