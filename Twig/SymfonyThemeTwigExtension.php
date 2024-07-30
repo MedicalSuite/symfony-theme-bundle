@@ -3,9 +3,9 @@
 namespace Velarde\SymfonyThemeBundle\Twig;
 
 use Twig\Environment;
-use Twig\TwigFunction;
-use Twig\Extension\AbstractExtension;
 use Twig\Error\LoaderError;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 class SymfonyThemeTwigExtension extends AbstractExtension
 {
@@ -33,14 +33,12 @@ class SymfonyThemeTwigExtension extends AbstractExtension
         $this->templatingEngine = $v;
     }
 
-
-
-    public function getName()
+    public function getName(): string
     {
         return 'symfony_theme_twig_extension';
     }
 
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return array(
             new TwigFunction('get_theme_layout', array($this, 'getThemeLayout')),
@@ -56,8 +54,7 @@ class SymfonyThemeTwigExtension extends AbstractExtension
 
     public function getThemeWidget($widgetName)
     {
-        $widget =  $this->widgetDirectory.':'.$widgetName.'.html.twig';
-
+        $widget = $this->widgetDirectory . ':' . $widgetName . '.html.twig';
 
         return $widget;
     }
@@ -66,11 +63,10 @@ class SymfonyThemeTwigExtension extends AbstractExtension
     {
         // use first the overwrite
 
-        $widget = $widgetName.'.html.twig';
-        try{
+        $widget = $widgetName . '.html.twig';
+        try {
             return $this->templatingEngine->render($widget);
-        }
-        catch (LoaderError $e){
+        } catch (LoaderError $e) {
             return $this->templatingEngine->render($this->getThemeWidget($widgetName));
         }
     }

@@ -4,21 +4,20 @@ namespace Velarde\SymfonyThemeBundle\DependencyInjection;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
-class Configuration implements  ConfigurationInterface
+class Configuration implements ConfigurationInterface
 {
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $tree = new TreeBuilder('velarde_symfony_theme');
         $root = $tree->getRootNode();
 
         $root->children()
             ->scalarNode('base_layout')
-                ->isRequired()
+            ->isRequired()
             ->end();
 
         $root->children()
             ->scalarNode('widget_directory')->isRequired()->end();
-
 
         return $tree;
     }
