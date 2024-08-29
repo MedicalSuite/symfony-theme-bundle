@@ -9,26 +9,21 @@ use Twig\TwigFunction;
 
 class SymfonyThemeTwigExtension extends AbstractExtension
 {
-    private $baseLayout;
+    private string $baseLayout;
+    private string $widgetDirectory;
+    private Environment $templatingEngine;
 
-    private $widgetDirectory;
-
-    /**
-     * @var Environment
-     */
-    private $templatingEngine;
-
-    public function setBaseLayout($v)
+    public function setBaseLayout($v): void
     {
         $this->baseLayout = $v;
     }
 
-    public function setWidgetDirectory($v)
+    public function setWidgetDirectory($v): void
     {
         $this->widgetDirectory = $v;
     }
 
-    public function setEngine(Environment $v)
+    public function setEngine(Environment $v): void
     {
         $this->templatingEngine = $v;
     }
@@ -47,19 +42,19 @@ class SymfonyThemeTwigExtension extends AbstractExtension
         );
     }
 
-    public function getThemeLayout()
+    public function getThemeLayout(): string
     {
         return $this->baseLayout;
     }
 
-    public function getThemeWidget($widgetName)
+    public function getThemeWidget($widgetName): string
     {
         $widget = $this->widgetDirectory . ':' . $widgetName . '.html.twig';
 
         return $widget;
     }
 
-    public function renderWidget($widgetName)
+    public function renderWidget($widgetName): string
     {
         // use first the overwrite
 

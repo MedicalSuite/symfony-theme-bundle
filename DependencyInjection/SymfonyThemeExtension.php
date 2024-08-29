@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 class SymfonyThemeExtension extends Extension
 {
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
@@ -22,9 +22,5 @@ class SymfonyThemeExtension extends Extension
                 $container->setParameter($this->getAlias().'.'.$key, $value);
             }
         }
-
-
-
     }
-
 }
